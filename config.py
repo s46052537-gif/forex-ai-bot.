@@ -4,9 +4,14 @@ Edit config.json (created automatically) instead of this file.
 """
 import json
 import os
+import sys
 from dataclasses import dataclass, field, asdict, fields
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# When packaged as an .exe, keep config/logs/data next to the .exe file.
+if getattr(sys, "frozen", False):
+    BASE_DIR = os.path.dirname(sys.executable)
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
 DATA_DIR = os.path.join(BASE_DIR, "data")
 LOG_DIR = os.path.join(BASE_DIR, "logs")
